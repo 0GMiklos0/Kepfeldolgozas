@@ -1,4 +1,4 @@
-#include <iostream>
+Ôªø#include <iostream>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -9,17 +9,17 @@ using namespace std;
 using namespace cv;
 
 void createHisto(const Mat img, Mat& hiszto) {
-	//a hiszto az eredmeny, float tÌpus˙ elemeket tartalmaz majd
+	//a hiszto az eredmeny, float t√≠pus√∫ elemeket tartalmaz majd
 	vector<Mat> kepek;
-	kepek.push_back(img); // egy kÈpet haszn·lunk
+	kepek.push_back(img); // egy k√©pet haszn√°lunk
 	vector<int> csatornak;
-	csatornak.push_back(0); //a kÈpnek a 0. csatorn·j·t haszn·ljuk
+	csatornak.push_back(0); //a k√©pnek a 0. csatorn√°j√°t haszn√°ljuk
 	vector<int> hiszto_meretek;
-	hiszto_meretek.push_back(256); //sz¸rke·rnyalatok sz·ma
+	hiszto_meretek.push_back(256); //sz√ºrke√°rnyalatok sz√°ma
 	vector<float> hiszto_tartomanyok;
-	hiszto_tartomanyok.push_back(0.0f); //hol kezd?dik a tartom·ny
+	hiszto_tartomanyok.push_back(0.0f); //hol kezd≈ëdik a tartom√°ny
 	hiszto_tartomanyok.push_back(255.f); //meddig tart
-	//accumlate: marad false (null·zza a hisztogrammot)
+	//accumlate: marad false (null√°zza a hisztogrammot)
 	calcHist(kepek, csatornak, noArray(), hiszto, hiszto_meretek,
 		hiszto_tartomanyok, false);
 }
@@ -136,11 +136,29 @@ int otodik() {
 	return 0;
 }
 
+int plusz() {
+	int sugar = 20;
+	int c = 10;
+	namedWindow("tool", WINDOW_NORMAL);
+	createTrackbar("kuszob", "tool", &sugar, 225);
+	createTrackbar("C", "tool", &c, 50);
+
+	Mat img = imread("zh.jpg", IMREAD_GRAYSCALE);
+	Mat dest;
+	int q;
+	while (waitKey(1) != 'q') {
+		adaptiveThreshold(img, dest, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 2*sugar+3, c-25);
+		imshow("kuszobolt", dest);
+	}
+	return 0;
+}
+
 int main() {
 	//elso();
 	//masodik();
 	//video();
 	//negyedik();
-	otodik();
+	//otodik();
+	plusz();
 	return 0;
 }
